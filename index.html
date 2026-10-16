@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Ôn tập Chương I - KHTN 6</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{overscroll-behavior:none}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:#eef2f7;color:#1f2937;line-height:1.6;padding:16px;
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+  -webkit-touch-callout:none}
+.wrap{max-width:900px;margin:0 auto;transition:filter .25s}
+header{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border-radius:16px;padding:22px;text-align:center;box-shadow:0 8px 24px rgba(37,99,235,.25)}
+header .date{font-size:.95rem;font-weight:600;opacity:.92;margin-bottom:6px}
+header h1{font-size:1.35rem;margin-bottom:4px;letter-spacing:.3px}
+.card{background:#fff;border-radius:14px;padding:16px;margin-top:16px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.info{display:flex;gap:12px;flex-wrap:wrap}
+.info .field{flex:1;min-width:200px}
+label.lbl{font-weight:700;font-size:.9rem;display:block;margin-bottom:5px;color:#334155}
+input[type=text]{width:100%;padding:12px 13px;border:2px solid #dbe3ee;border-radius:10px;font-size:16px;outline:none;transition:.2s;font-family:inherit;-webkit-appearance:none}
+input[type=text]:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.status-bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center;background:#f8fafc;border:1.5px solid #e6ebf3;border-radius:12px;padding:12px 14px;margin-top:14px}
+.status-bar .item{font-weight:700;font-size:.92rem;color:#1e293b;display:flex;align-items:center;gap:6px}
+.status-bar .item .val{color:#16a34a;font-weight:900;font-size:1.05rem;font-variant-numeric:tabular-nums}
+.status-bar .item .val.warn{color:#f59e0b}
+.status-bar .item .val.danger{color:#dc2626;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.part-title{background:#f1f5ff;border-left:5px solid #2563eb;padding:11px 15px;border-radius:8px;font-weight:800;color:#1e40af;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;font-size:.95rem}
+.part-title .pt{font-size:.8rem;font-weight:700;color:#64748b}
+.q{padding:14px;border:1.5px solid #e6ebf3;border-radius:12px;margin-bottom:12px;background:#fcfdff}
+.qtext{font-weight:600;margin-bottom:10px;font-size:1rem}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:620px){.opts{grid-template-columns:1fr}}
+.opt{display:flex;align-items:center;gap:9px;padding:12px 13px;border:1.5px solid #dbe3ee;border-radius:10px;cursor:pointer;transition:.15s;background:#fff;font-size:.98rem;min-height:48px}
+.opt:active{background:#f0f5ff;border-color:#93b4f5}
+.opt input{accent-color:#2563eb;width:20px;height:20px;cursor:pointer;flex-shrink:0}
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fill input{max-width:100%;font-size:1.1rem;font-weight:600;text-align:center;letter-spacing:.5px}
+.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+button{flex:1;min-width:150px;padding:16px;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;transition:.2s;font-family:inherit;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#btnSubmit{background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;box-shadow:0 6px 18px rgba(37,99,235,.3)}
+#btnReview{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;box-shadow:0 6px 18px rgba(245,158,11,.3);display:none}
+#btnSend{background:linear-gradient(135deg,#16a34a,#059669);color:#fff;box-shadow:0 6px 18px rgba(22,163,74,.3);display:none}
+button:active{transform:scale(.98)}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+#result{display:none;text-align:center;margin-top:16px}
+#result.show{display:block}
+.score-big{font-size:2rem;font-weight:900;color:#2563eb;line-height:1.2}
+.score-detail{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.score-detail div{background:#f1f5f9;padding:9px 16px;border-radius:10px;font-weight:700;font-size:.9rem}
+.time-info{margin-top:14px;font-weight:700;color:#16a34a;font-size:1rem}
+.foot{text-align:center;color:#475569;font-size:.82rem;margin:22px 0 10px;font-weight:600;padding:0 8px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(200%);background:#0f172a;color:#fff;padding:13px 20px;border-radius:12px;font-weight:700;transition:.35s;z-index:99;max-width:90%;text-align:center;font-size:.92rem}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.warn{background:#dc2626}
+.notice{background:#fff7ed;border-left:5px solid #f59e0b;color:#92400e;padding:11px 15px;border-radius:8px;font-size:.88rem;font-weight:600;margin-top:14px;line-height:1.55}
+
+/* ===== HIỂN THỊ KẾT QUẢ ===== */
+.ans-info{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.9rem;font-weight:600;display:none;line-height:1.7}
+.ans-info.show{display:block}
+.ans-info.correct{background:#f0fdf4;border-left:3px solid #16a34a;color:#166534}
+.ans-info.wrong{background:#fef2f2;border-left:3px solid #dc2626;color:#991b1b}
+.correct-ans{color:#16a34a;font-weight:700}
+.wrong-ans{color:#dc2626;font-weight:700}
+.opt.correct-mark{background:#f0fdf4 !important;border-color:#16a34a !important}
+.opt.wrong-mark{background:#fef2f2 !important;border-color:#dc2626 !important}
+.tf-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed #e2e8f0}
+.tf-row:last-child{border-bottom:none}
+.tf-row .tf-label{font-weight:600;font-size:.95rem}
+.tf-row label{display:flex;align-items:center;gap:4px;font-weight:700;font-size:.88rem;cursor:pointer}
+.match-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;align-items:center}
+.match-row select{padding:8px;border:1.5px solid #dbe3ee;border-radius:8px;font-size:.95rem;font-family:inherit;width:100%}
+.match-head{font-weight:800;color:#1e40af;font-size:.9rem;text-align:center;padding:4px}
+
+.blur-overlay{position:fixed;inset:0;background:rgba(15,23,42,.96);color:#fff;display:none;align-items:center;justify-content:center;z-index:9998;font-size:1.2rem;font-weight:800;text-align:center;padding:24px;line-height:1.6;flex-direction:column}
+.blur-overlay.show{display:flex}
+.blur-overlay .big{font-size:3rem;margin-bottom:16px}
+.blur-overlay .sub{font-size:.78em;opacity:.85;margin-top:14px;font-weight:600}
+body.blurred .wrap{filter:blur(20px);pointer-events:none}
+
+.warn-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px}
+.warn-modal.show{display:flex}
+.warn-box{background:#fff;border-radius:16px;max-width:480px;width:100%;padding:24px;text-align:center;border-top:6px solid #dc2626;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.warn-box h2{color:#dc2626;font-size:1.2rem;margin-bottom:10px}
+.warn-box p{color:#334155;margin-bottom:10px;font-size:.95rem;line-height:1.55}
+.warn-box .count{display:inline-block;background:#fef3c7;color:#92400e;font-weight:900;padding:6px 14px;border-radius:20px;margin:8px 0;font-size:1rem}
+.warn-box button{margin-top:14px;background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;padding:14px;border-radius:10px;width:100%;font-weight:800;border:none;cursor:pointer;font-size:1rem}
+
+.start-overlay{position:fixed;inset:0;background:#0f172a;color:#fff;display:flex;align-items:center;justify-content:center;z-index:10000;padding:20px;text-align:center}
+.start-overlay .box{max-width:520px;width:100%}
+.start-overlay h1{font-size:1.3rem;margin-bottom:16px}
+.start-overlay ul{text-align:left;background:rgba(255,255,255,.08);padding:16px 20px;border-radius:12px;font-size:.92rem;line-height:1.8;margin-bottom:18px}
+.start-overlay li{margin-bottom:4px}
+.start-overlay button{background:linear-gradient(135deg,#16a34a,#059669);color:#fff;padding:16px 24px;border:none;border-radius:12px;font-weight:800;font-size:1.05rem;cursor:pointer;width:100%}
+.start-overlay.hide{display:none}
+</style>
+</head>
+<body>
+
+<div class="start-overlay" id="startOverlay">
+  <div class="box">
+    <h1>📘 ÔN TẬP CHƯƠNG I - KHTN 6</h1>
+    <ul>
+      <li>⏱️ <b>Không giới hạn thời gian</b> — Làm bài thoải mái</li>
+      <li>📝 <b>60 câu hỏi</b> gồm 4 phần: Trắc nghiệm – Đúng/Sai – Điền khuyết – Ghép đôi</li>
+      <li>📝 <b>Đây là bài luyện tập</b> — Không tính điểm, chỉ kiểm tra đúng/sai</li>
+      <li>🚫 <b>Không</b> được rời khỏi màn hình làm bài</li>
+      <li>👁️ Hệ thống <b>ghi nhận mọi lần chuyển app/tab</b></li>
+      <li>⚠️ Rời màn hình <b>3 lần</b> → <b>tự động nộp bài</b></li>
+      <li>⏳ Rời màn hình quá <b>30 giây</b> → <b>tự động nộp bài</b></li>
+      <li>📋 Sau khi nộp, bấm nút <b>XEM LẠI BÀI</b> để kiểm tra đáp án đúng/sai</li>
+    </ul>
+    <button id="btnStart">✅ TÔI ĐÃ HIỂU – BẮT ĐẦU LÀM BÀI</button>
+  </div>
+</div>
+
+<div class="wrap" id="mainWrap">
+
+  <header>
+    <div class="date">📅 Ôn tập Chương I - KHTN 6</div>
+    <h1>📘 ÔN TẬP CHƯƠNG I - KHTN 6</h1>
+  </header>
+
+  <div class="card info">
+    <div class="field">
+      <label class="lbl">Họ và tên học sinh</label>
+      <input type="text" id="sName" placeholder="Nhập họ và tên..." autocomplete="off">
+    </div>
+    <div class="field">
+      <label class="lbl">Lớp</label>
+      <input type="text" id="sClass" placeholder="Ví dụ: 6A" autocomplete="off">
+    </div>
+    <div class="notice">📝 <b>Bài luyện tập:</b> Không tính điểm, không giới hạn thời gian. Sau khi nộp, bấm <b>XEM LẠI BÀI</b> để kiểm tra đáp án từng câu.</div>
+  </div>
+
+  <div class="status-bar">
+    <div class="item">⏱️ Thời gian đã làm: <span class="val" id="timerInfo">00:00</span></div>
+    <div class="item">👁️ Rời màn hình: <span class="val ok" id="violationInfo">0 / 3</span></div>
+  </div>
+
+  <!-- PHẦN I -->
+  <div class="card" id="part1">
+    <div class="part-title">
+      <span>PHẦN I. TRẮC NGHIỆM 4 LỰA CHỌN (40 câu)</span>
+      <span class="pt">Câu 1 → 40</span>
+    </div>
+    <div id="p1box"></div>
+  </div>
+
+  <!-- PHẦN II -->
+  <div class="card" id="part2">
+    <div class="part-title">
+      <span>PHẦN II. ĐÚNG – SAI (10 câu × 4 ý)</span>
+      <span class="pt">Câu 41 → 50</span>
+    </div>
+    <div id="p2box"></div>
+  </div>
+
+  <!-- PHẦN III -->
+  <div class="card" id="part3">
+    <div class="part-title">
+      <span>PHẦN III. ĐIỀN KHUYẾT (5 câu × 2 chỗ trống)</span>
+      <span class="pt">Câu 51 → 55</span>
+    </div>
+    <div id="p3box"></div>
+  </div>
+
+  <!-- PHẦN IV -->
+  <div class="card" id="part4">
+    <div class="part-title">
+      <span>PHẦN IV. GHÉP ĐÔI (5 câu × 4 cặp)</span>
+      <span class="pt">Câu 56 → 60</span>
+    </div>
+    <div id="p4box"></div>
+  </div>
+
+  <div class="btns">
+    <button id="btnSubmit">✅ NỘP BÀI</button>
+    <button id="btnReview">📋 XEM LẠI BÀI LÀM</button>
+    <button id="btnSend" disabled>📤 GỬI KẾT QUẢ</button>
+  </div>
+
+  <div class="card" id="result">
+    <div>Kết quả làm bài</div>
+    <div class="score-big" id="scoreBig">0 / 60</div>
+    <div class="score-detail" id="scoreDetail"></div>
+    <div class="time-info" id="timeResult"></div>
+    <div style="margin-top:14px;font-size:.9rem;color:#64748b">
+      💡 Bấm <b>📋 XEM LẠI BÀI LÀM</b> để kiểm tra đáp án đúng/sai từng câu.
+    </div>
+  </div>
+
+  <div class="foot">Bản quyền của GV: Nguyễn Thị Diệp - Trường THCS Tây Thái Ninh</div>
+</div>
+
+<div class="blur-overlay" id="blurOverlay">
+  <div class="big">🚫</div>
+  <div>BÀI LÀM ĐANG BỊ TẠM ẨN</div>
+  <div class="sub">Hệ thống phát hiện bạn vừa rời khỏi màn hình làm bài.<br>Hành vi này đã được ghi lại và báo cho giáo viên.<br>Hãy quay lại làm bài ngay!</div>
+</div>
+
+<div class="warn-modal" id="warnModal">
+  <div class="warn-box">
+    <h2>⚠️ CẢNH BÁO VI PHẠM</h2>
+    <p id="warnMsg">Bạn vừa rời khỏi màn hình làm bài.</p>
+    <div class="count" id="warnCount">Lần 1 / 3</div>
+    <p style="font-size:.85rem;color:#64748b">Vi phạm <b>lần thứ 3</b> hoặc rời màn hình quá <b>30 giây</b> sẽ bị <b>tự động nộp bài</b> ngay lập tức.</p>
+    <button id="warnBtn">ĐÃ HIỂU – QUAY LẠI BÀI LÀM</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================== NGÂN HÀNG CÂU HỎI ================== */
+
+/* ===== PHẦN I: 40 CÂU TRẮC NGHIỆM ===== */
+const MCQ = [
+  {q:"Đối tượng nghiên cứu nào sau đây thuộc về khoa học tự nhiên?",
+   opts:["Lịch sử các cuộc khởi nghĩa giành độc lập.",
+         "Sự sinh trưởng, phát triển của sinh vật và hiện tượng biến đổi khí hậu.",
+         "Hệ thống quy tắc ngữ pháp ngôn ngữ học.",
+         "Quá trình phát triển kinh tế thương mại quốc gia."],
+   a:1},
+  {q:"Lĩnh vực nào nghiên cứu các tính chất cơ, nhiệt, điện và năng lượng của vật chất?",
+   opts:["Sinh học.","Hóa học.","Vật lí học.","Khoa học Trái Đất."], a:2},
+  {q:"Hoạt động nào sau đây là hoạt động nghiên cứu khoa học tự nhiên?",
+   opts:["Giáo viên giảng bài môn Lịch sử.","Vận động viên điền kinh thi đấu.",
+         "Kỹ sư nông nghiệp lai ghép giống cây trồng mới trong vườn sinh học.",
+         "Học sinh múa hát tập thể dưới sân trường."], a:2},
+  {q:"Lĩnh vực chuyên nghiên cứu về vũ trụ, hành tinh, ngôi sao và các thiên thể được gọi là gì?",
+   opts:["Sinh học.","Thiên văn học.","Hóa học.","Khoa học Trái Đất."], a:1},
+  {q:"Vật nào sau đây thuộc nhóm vật không sống?",
+   opts:["Con cá heo đang bơi dưới biển.","Cây nấm rơm mọc bên bờ ruộng.",
+         "Hòn sỏi nằm trên bãi cát.","Cây bàng đang thay lá mùa đông."], a:2},
+  {q:"Biển cảnh báo hình tam giác đều, viền đen, nền vàng có hình ngọn lửa màu đen cảnh báo điều gì?",
+   opts:["Chất độc sinh học.","Chất ăn mòn nguy hiểm.",
+         "Khu vực có chất dễ cháy.","Nguồn điện cao thế."], a:2},
+  {q:"Biển báo hình tròn màu xanh lam có hình vẽ chiếc kính bảo hộ màu trắng mang ý nghĩa gì?",
+   opts:["Biển báo cấm thực hiện.","Biển báo bắt buộc đeo kính bảo hộ bảo vệ mắt.",
+         "Biển báo chỉ dẫn lối thoát hiểm.","Biển cảnh báo chất lỏng ăn mòn."], a:1},
+  {q:"Biển báo có hình tròn, viền đỏ, nền trắng và gạch chéo đỏ ở giữa là loại biển báo nào?",
+   opts:["Biển cảnh báo nguy hiểm.","Biển chỉ dẫn.",
+         "Biển báo cấm.","Biển bắt buộc thực hiện."], a:2},
+  {q:"Hành vi nào sau đây đúng quy tắc an toàn trong phòng thực hành?",
+   opts:["Đổ hóa chất thừa trực tiếp vào bồn rửa sạch.",
+         "Dùng tay không cầm ống nghiệm chứa dung dịch nóng.",
+         "Đọc kỹ nội quy và thực hiện thí nghiệm dưới sự hướng dẫn của giáo viên.",
+         "Mang thức ăn, nước uống đặt lên bàn hóa chất."], a:2},
+  {q:"Khi tắt lửa đèn cồn an toàn, ta cần sử dụng thao tác nào?",
+   opts:["Dùng miệng thổi mạnh từ trên xuống.",
+         "Dùng nắp bấc đậy nhanh và dứt khoát lên ngọn lửa.",
+         "Đổ nước trực tiếp vào bấc đang cháy.",
+         "Dùng quyển sách quạt mạnh."], a:1},
+  {q:"Kính lúp cầm tay thông thường cấu tạo chính gồm bộ phận nào?",
+   opts:["Một thấu kính phân kỳ tiêu cự ngắn.",
+         "Một thấu kính hội tụ có khung bảo vệ và tay cầm.",
+         "Hệ thống thấu kính phức hợp gồm 3 vật kính.",
+         "Gương phản chiếu ánh sáng tự nhiên."], a:1},
+  {q:"Kính lúp cầm tay thông thường giúp phóng đại ảnh của vật lên khoảng bao nhiêu lần?",
+   opts:["Từ 3 đến 20 lần.","Từ 100 đến 400 lần.",
+         "Từ 1000 đến 3000 lần.","Trên 5000 lần."], a:0},
+  {q:"Bộ phận nào của kính hiển vi quang học là nơi mắt đặt vào để quan sát ảnh vật?",
+   opts:["Vật kính.","Thị kính.","Bàn kính.","Ốc sơ cấp."], a:1},
+  {q:"Hệ thống điều chỉnh của kính hiển vi quang học bao gồm những bộ phận nào?",
+   opts:["Thị kính và vật kính.","Đèn chiếu sáng và màn chắn sáng.",
+         "Ốc sơ cấp (ốc to) và ốc vi cấp (ốc nhỏ).","Chân đế và thân kính."], a:2},
+  {q:"Ống quay chứa các vật kính của kính hiển vi có chức năng gì?",
+   opts:["Thay đổi độ sáng của đèn.",
+         "Di chuyển bàn kính lên xuống nhanh chóng.",
+         "Lựa chọn vật kính có độ phóng đại phù hợp.",
+         "Giữ cố định lamen mẫu vật."], a:2},
+  {q:"Đơn vị đo chiều dài hợp pháp trong hệ thống đo lường quốc tế ở nước ta là gì?",
+   opts:["Centimét","Kilômét","Mét","Milimét"], a:2},
+  {q:"Giới hạn đo (GHĐ) của một chiếc thước được định nghĩa là gì?",
+   opts:["Chiều dài lớn nhất ghi trên thước.",
+         "Khoảng cách giữa hai vạch chia liên tiếp trên thước.",
+         "Chiều dài của vật nhỏ nhất đo được.",
+         "Độ dài phân đoạn nhỏ nhất của thước."], a:0},
+  {q:"Độ chia nhỏ nhất (ĐCNN) của dụng cụ đo là gì?",
+   opts:["Giá trị nhỏ nhất ghi trên thang đo.",
+         "Hiệu giá trị giữa hai vạch chia liên tiếp trên thang đo.",
+         "Chiều dài lớn nhất ghi trên thang đo.",
+         "Giá trị trung bình của toàn bộ thang số."], a:1},
+  {q:"Đơn vị đo khối lượng chính thức trong hệ đo lường SI là gì?",
+   opts:["Tấn","Gam","Kilôgam","Miligam"], a:2},
+  {q:"Dụng cụ nào sau đây chuyên dùng để xác định lượng chất (khối lượng) của vật?",
+   opts:["Thước kẻ vuông.","Cân đồng hồ.","Nhiệt kế chất lỏng.","Đồng hồ bấm giây."], a:1},
+  {q:"Đơn vị cơ bản đo thời gian trong hệ thống đo lường SI hợp pháp là gì?",
+   opts:["Giờ","Phút","Giây","Ngày đêm."], a:2},
+  {q:"Trong thi đấu thể thao, loại đồng hồ nào đo khoảng thời gian chạy chính xác nhất?",
+   opts:["Đồng hồ cát cổ điển.","Đồng hồ bấm giây điện tử.",
+         "Đồng hồ quả lắc.","Đồng hồ treo tường."], a:1},
+  {q:"Thang nhiệt độ phổ biến dùng ở nước ta hằng ngày là thang nhiệt độ nào?",
+   opts:["Thang Fahrenheit.","Thang Celsius.","Thang Kelvin.","Thang Réaumur."], a:1},
+  {q:"Nhiệt kế chất lỏng hoạt động dựa trên hiện tượng vật lý cốt lõi nào?",
+   opts:["Sự nóng chảy của kim loại rắn.",
+         "Sự co giãn vì nhiệt của chất lỏng trong ống mao dẫn.",
+         "Sự bay hơi của nước cất.",
+         "Sự biến đổi màu sắc của hóa chất chỉ thị."], a:1},
+  {q:"Nhiệt độ của nước đá đang tan trong thang đo Celsius được quy ước là bao nhiêu?",
+   opts:["32°F","100°C","0°C","273 K"], a:2},
+  {q:"Vì sao khoa học tự nhiên đóng vai trò then chốt trong phát triển bền vững?",
+   opts:["Vì nó giúp con người khai thác triệt để nguồn tài nguyên thiên nhiên.",
+         "Vì nó cung cấp giải pháp công nghệ sạch, xử lý ô nhiễm và bảo vệ đa dạng sinh học.",
+         "Vì nó thúc đẩy việc xây dựng các nhà máy công nghiệp hóa chất đại trà.",
+         "Vì nó chứng minh tài nguyên thiên nhiên là vô hạn."], a:1},
+  {q:"Hạt giống lúa cất trong kho khô ráo không mọc mầm nhưng vẫn là vật sống vì lý do nào?",
+   opts:["Vì nó có hình dạng và màu sắc giống cây lúa.",
+         "Vì nó mang tiềm năng trao đổi chất, lớn lên và sinh sản khi gặp điều kiện môi trường phù hợp.",
+         "Vì nó được cấu tạo từ chất hữu cơ nhân tạo.",
+         "Vì nó không tiêu thụ năng lượng điện."], a:1},
+  {q:"Tại sao khi bị axit dính vào da tay, ta phải xả tay dưới vòi nước sạch chảy liên tục nhiều phút?",
+   opts:["Để axit phản ứng nhanh hơn.",
+         "Để làm loãng nồng độ axit và giảm nhiệt độ vùng bỏng, hạn chế tổn thương sâu.",
+         "Để trung hòa axit bằng các chất bẩn bám trên da.",
+         "Để làm vết thương khô nhanh hơn."], a:1},
+  {q:"Khi thị kính ghi 10x và vật kính chọn 40x, tổng độ phóng đại của kính hiển vi là bao nhiêu?",
+   opts:["50 lần.","30 lần.","400 lần.","4000 lần."], a:2},
+  {q:"Một chiếc thước có vạch số 0 đến 20 cm, giữa vạch 0 và vạch 1 cm có 10 khoảng chia đều. GHĐ và ĐCNN của thước là bao nhiêu?",
+   opts:["GHĐ 20 cm; ĐCNN 1 cm.",
+         "GHĐ 20 cm; ĐCNN 0,1 cm.",
+         "GHĐ 10 cm; ĐCNN 0,2 cm.",
+         "GHĐ 20 cm; ĐCNN 1 mm."], a:3},
+  {q:"Khi đo thể tích vật rắn không thấm nước bằng bình tràn đầy nước, thể tích vật rắn được tính bằng lượng nào?",
+   opts:["Thể tích toàn bộ bình tràn.",
+         "Thể tích lượng nước tràn từ bình tràn sang bình chứa.",
+         "Thể tích lượng nước còn lại trong bình tràn.",
+         "Khối lượng của nước tràn ra."], a:1},
+  {q:"Tại sao mặt kính của nhiệt kế y tế thủy ngân có một đoạn ống mao dẫn bị thắt lại gần bầu?",
+   opts:["Để trang trí cho nhiệt kế đẹp hơn.",
+         "Để giữ nguyên mực thủy ngân không bị tụt xuống ngay khi rút ra khỏi cơ thể, giúp đọc chỉ số chính xác.",
+         "Để thủy ngân giãn nở nhanh hơn.",
+         "Để ngăn thủy ngân không bay hơi ra ngoài."], a:1},
+  {q:"Sự khác biệt căn bản giữa kính lúp và kính hiển vi quang học là gì?",
+   opts:["Kính lúp chạy bằng pin, kính hiển vi dùng cơ năng.",
+         "Kính lúp gồm một thấu kính đơn phóng đại nhỏ, kính hiển vi gồm hệ thống thấu kính phối hợp cho độ phóng đại siêu lớn.",
+         "Kính lúp chỉ quan sát được tế bào thực vật, kính hiển vi quan sát được côn trùng.",
+         "Kính hiển vi nhỏ gọn hơn kính lúp cầm tay."], a:1},
+  {q:"Khi đọc giá trị đo khối lượng trên cân đồng hồ, hướng mắt nhìn như thế nào là đúng?",
+   opts:["Nhìn nghiêng một góc 45 độ từ bên trái.",
+         "Nhìn đặt hướng vuông góc với mặt đồng hồ cân tại vị trí mũi kim chỉ.",
+         "Nhìn từ dưới lên.",
+         "Đặt mắt nhìn xiên từ bên phải."], a:1},
+  {q:"Đổi giá trị nhiệt độ cơ thể người bình thường 37°C sang thang Kelvin (K). Kết quả là bao nhiêu?",
+   opts:["37 K.","100 K.","310 K.","273 K."], a:2},
+  {q:"Bạn Nam làm vỡ nhiệt kế thủy ngân khiến các hạt thủy ngân lăn ra sàn nhà. Thao tác nào xử lý an toàn nhất?",
+   opts:["Dùng máy hút bụi hút thật mạnh.",
+         "Báo giáo viên dùng bột lưu huỳnh rắc lên hạt thủy ngân để tạo hợp chất rắn bền vững không bay hơi rồi thu gom.",
+         "Dùng chổi quét mạnh hất ra cửa lớp.",
+         "Dùng tay bốc bỏ vào thùng rác lớp học."], a:1},
+  {q:"Để đo độ dày một tờ giấy trong cuốn sách KHTN 6 bằng thước kẻ có ĐCNN 1 mm, em nên dùng phương pháp nào?",
+   opts:["Đo độ dày 1 tờ rồi nhân với 100.",
+         "Đo tổng độ dày của 100 trang giấy liên tiếp (không tính bìa) rồi lấy kết quả đó chia cho 100.",
+         "Dùng kính lúp phóng to tờ giấy rồi dùng thước đo.",
+         "Đo chiều dài cuốn sách chia cho số trang."], a:1},
+  {q:"Khi đo thể tích một hòn đá bằng bình chia độ có mực nước ban đầu là 50 ml. Sau khi thả chìm hòn đá vào, nước dâng lên vạch 85 ml. Thể tích hòn đá là bao nhiêu?",
+   opts:["50 ml.","85 ml.","35 ml.","135 ml."], a:2},
+  {q:"Một sợi dây đồng mảnh quấn sát nhau quanh chiếc bút chì thành 20 vòng. Đo chiều dài đoạn quấn được 10 mm. Đường kính sợi dây đồng là bao nhiêu?",
+   opts:["2 mm.","1 mm.","0,5 mm.","0,2 mm."], a:2},
+  {q:"Để cân một đồng xu cổ rất nhẹ bằng cân đồng hồ có ĐCNN 50 g, một bạn đặt 100 đồng xu giống nhau lên cân thấy kim chỉ vạch 200 g. Khối lượng một đồng xu là bao nhiêu?",
+   opts:["20 g.","2 g.","0,2 g.","50 g."], a:1}
+];
+
+/* ===== PHẦN II: 10 CÂU ĐÚNG/SAI ===== */
+const TF = [
+  {title:"Câu 41: Đối tượng nghiên cứu và vai trò của KHTN",
+   subs:[
+    {q:"a) Khoa học tự nhiên chỉ nghiên cứu vật thể sống, không nghiên cứu vật không sống.", a:false},
+    {q:"b) Ứng dụng công nghệ sinh học giúp sản xuất thuốc điều trị bệnh là vai trò phục vụ đời sống con người của KHTN.", a:true},
+    {q:"c) Hoạt động xả trực tiếp khí thải công nghiệp chưa qua xử lý là hành vi thúc đẩy phát triển bền vững.", a:false},
+    {q:"d) Học sinh trung học có thể thực hiện nghiên cứu khoa học thông qua các dự án thực nghiệm nhỏ dưới sự hướng dẫn của giáo viên.", a:true}
+   ]},
+  {title:"Câu 42: Quy định an toàn trong phòng thực hành",
+   subs:[
+    {q:"a) Tất cả các biển cảnh báo bắt buộc thực hiện hành vi đều có dạng hình tròn nền màu xanh lam.", a:true},
+    {q:"b) Biển báo hình tròn viền đỏ nền trắng có gạch chéo đỏ ở giữa biểu thị cảnh báo nguy hiểm độc hại.", a:false},
+    {q:"c) Học sinh có thể ngửi thử hóa chất lạ nếu dung dịch đó trong suốt và không có khói bốc lên.", a:false},
+    {q:"d) Sau khi kết thúc buổi thực hành, học sinh phải thu dọn dụng cụ, tắt thiết bị điện và rửa sạch tay bằng xà phòng.", a:true}
+   ]},
+  {title:"Câu 43: Sử dụng và bảo quản kính lúp cầm tay",
+   subs:[
+    {q:"a) Kính lúp cầm tay hoạt động dựa trên nguyên lý khúc xạ ánh sáng qua thấu kính hội tụ tiêu cự ngắn.", a:true},
+    {q:"b) Khi dịch chuyển kính lúp ra xa vật vô hạn, mắt ta sẽ nhìn thấy ảnh của vật luôn luôn phóng to rõ nét.", a:false},
+    {q:"c) Cần lau mắt kính bằng khăn bông thô hoặc giấy nhám để cạo sạch bụi bẩn cứng bám trên kính.", a:false},
+    {q:"d) Tránh để bề mặt kính tiếp xúc trực tiếp với hóa chất ăn mòn mạnh như axit hoặc kiềm.", a:true}
+   ]},
+  {title:"Câu 44: Vận hành kính hiển vi quang học",
+   subs:[
+    {q:"a) Thao tác tìm ảnh mờ ban đầu của mẫu vật phải được thực hiện bằng cách vặn ốc sơ cấp (ốc lớn).", a:true},
+    {q:"b) Để thay đổi độ phóng đại của ảnh mẫu vật, người dùng phải xoay mâm kính để chuyển đổi các vật kính.", a:true},
+    {q:"c) Khi quan sát, mắt của người học phải đặt áp sát vào hệ thống thấu kính của vật kính nằm dưới bàn kính.", a:false},
+    {q:"d) Việc hạ vật kính sát lamen phải nhìn từ ngoài ống kính để tránh nguy cơ vật kính tì nứt tiêu bản mẫu.", a:true}
+   ]},
+  {title:"Câu 45: Quy trình đo chiều dài bằng thước",
+   subs:[
+    {q:"a) Lựa chọn thước đo có giới hạn đo (GHĐ) nhỏ hơn chiều dài thực tế của vật cần đo giúp giảm thiểu sai số.", a:false},
+    {q:"b) Phải đặt thước dọc theo chiều dài vật cần đo, vạch số 0 của thước trùng khít với một đầu của vật.", a:true},
+    {q:"c) Hướng mắt nhìn đọc chỉ số phải đặt vuông góc với cạnh thước ở đầu còn lại của vật.", a:true},
+    {q:"d) Độ chia nhỏ nhất (ĐCNN) của thước kẻ học sinh luôn luôn cố định là 1 mm trên mọi dải sản xuất.", a:false}
+   ]},
+  {title:"Câu 46: Đo khối lượng bằng cân đồng hồ",
+   subs:[
+    {q:"a) Cân tiểu ly điện tử là dụng cụ thích hợp để đo khối lượng vật có tải trọng hàng tấn như xe tải lớn.", a:false},
+    {q:"b) Trước khi đặt vật lên đĩa cân, người đo cần điều chỉnh kim cân về chính xác vạch chỉ số 0.", a:true},
+    {q:"c) Đặt vật lệch hẳn về một bên mép đĩa cân sẽ không làm sai lệch kết quả đo của kim cân đồng hồ.", a:false},
+    {q:"d) Đọc và ghi kết quả đo theo giá trị vạch chia gần nhất với đầu mũi kim chỉ của cân đồng hồ.", a:true}
+   ]},
+  {title:"Câu 47: Đo thời gian bằng đồng hồ bấm giây",
+   subs:[
+    {q:"a) Một ngày đêm tiêu chuẩn trên Trái Đất được quy ước có thời gian tương đương với 86400 s.", a:true},
+    {q:"b) Bấm nút 'Reset' về vạch số 0 giúp xóa sai số của phép đo thời gian trước đó khi bắt đầu lượt đo mới.", a:true},
+    {q:"c) Để đo thời gian chạy 100m của học sinh, loại dụng cụ đo hợp lý nhất là đồng hồ cát cổ điển.", a:false},
+    {q:"d) Thao tác bấm nút dừng đồng hồ quá muộn sau khi vận động viên đã qua vạch đích sẽ làm tăng thời gian thực tế.", a:true}
+   ]},
+  {title:"Câu 48: Nhiệt kế chất lỏng và thang đo nhiệt độ",
+   subs:[
+    {q:"a) Chất lỏng chứa bên trong bầu của mọi loại nhiệt kế y tế thông dụng đều là nước tinh khiết pha màu.", a:false},
+    {q:"b) Điểm sôi của nước nguyên chất ở áp suất tiêu chuẩn trong thang đo Celsius được quy ước là 100°C.", a:true},
+    {q:"c) Không được dùng nhiệt kế rượu có GHĐ tối đa 50°C để xác định nhiệt độ của dầu hỏa đang sôi.", a:true},
+    {q:"d) Thao tác vẩy mạnh nhiệt kế y tế thủy ngân trước khi đo nhằm mục đích kéo mực thủy ngân tụt xuống dưới mức 35°C.", a:true}
+   ]},
+  {title:"Câu 49: Đặc trưng sống của vật sống và vật không sống",
+   subs:[
+    {q:"a) Con rô-bốt thông minh có khả năng di chuyển và phát âm giọng nói nên nó có đầy đủ đặc tính của vật sống.", a:false},
+    {q:"b) Vi khuẩn tuy có kích thước hiển vi siêu nhỏ nhưng vẫn có các đặc trưng sống như trao đổi chất, lớn lên.", a:true},
+    {q:"c) Ngọn lửa bếp gas phát triển kích thước liên tục khi cung cấp oxy nên nó là một cơ thể sống.", a:false},
+    {q:"d) Hạt thóc sấy khô bảo quản trong kho tuy không biểu hiện trao đổi chất mạnh nhưng vẫn mang tiềm năng của vật sống.", a:true}
+   ]},
+  {title:"Câu 50: Sai số trong phép đo",
+   subs:[
+    {q:"a) Việc đo đạc lặp lại nhiều lần và lấy giá trị trung bình cộng giúp loại bỏ hoàn toàn mọi sai số dụng cụ.", a:false},
+    {q:"b) Dụng cụ đo có độ chia nhỏ nhất (ĐCNN) càng nhỏ thì phép đo thu được kết quả càng có độ chính xác cao.", a:true},
+    {q:"c) Mọi phép đo đại lượng vật lý trong thực tế đời sống đều tồn tại một sai số nhất định.", a:true},
+    {q:"d) Sai số dụng cụ thường được tính bằng một nửa hoặc một độ chia nhỏ nhất của thiết bị đo đó.", a:true}
+   ]}
+];
+
+/* ===== PHẦN III: 5 CÂU ĐIỀN KHUYẾT ===== */
+const FILL = [
+  {q:"Câu 51: Khoa học tự nhiên là ngành khoa học nghiên cứu về các sự vật, hiện tượng của (a) ........, các quy luật tự nhiên nhằm mục đích giải thích các hiện tượng và ứng dụng vào đời sống. Những người chuyên nghiên cứu về KHTN gọi là nhà khoa học, và hoạt động của họ được gọi là hoạt động (b) ........",
+   blanks:[{label:"(a)", a:"thế giới tự nhiên"},{label:"(b)", a:"nghiên cứu khoa học"}]},
+  {q:"Câu 52: Vật sống có các đặc trưng sống cốt lõi mà vật không sống không có, đó là khả năng lấy các chất cần thiết từ môi trường bên ngoài và thải chất thải ra ngoài môi trường, quá trình này được gọi là (a) ........ Sinh vật tăng trưởng kích thước nhờ quá trình (b) ........ và duy trì nòi giống qua quá trình sinh sản.",
+   blanks:[{label:"(a)", a:"trao đổi chất"},{label:"(b)", a:"lớn lên"}]},
+  {q:"Câu 53: Mỗi dụng cụ đo đều có hai thông số ghi trên thân dụng cụ. Chiều dài lớn nhất hoặc giá trị lớn nhất ghi trên thang đo của dụng cụ được gọi là (a) ........ Khoảng cách giá trị giữa hai vạch chia liên tiếp ghi trên dụng cụ đó được định nghĩa là (b) ........",
+   blanks:[{label:"(a)", a:"giới hạn đo"},{label:"(b)", a:"độ chia nhỏ nhất"}]},
+  {q:"Câu 54: Khi tiến hành đo chiều dài của một khối hộp gỗ bằng thước kẻ, trước tiên ta cần đặt thước áp sát và nằm (a) ........ chiều dài cần đo của vật, sao cho một đầu của vật gỗ trùng khít với vạch số 0 của thước. Khi đọc kết quả đo, mắt nhìn của người đo phải được đặt theo hướng (b) ........ với cạnh thước ở đầu còn lại.",
+   blanks:[{label:"(a)", a:"dọc theo"},{label:"(b)", a:"vuông góc"}]},
+  {q:"Câu 55: Để đo mức độ nóng, lạnh của một vật, người ta sử dụng đại lượng vật lí gọi là (a) ........ Dụng cụ chuyên dụng dùng để đo đại lượng này là (b) ........",
+   blanks:[{label:"(a)", a:"nhiệt độ"},{label:"(b)", a:"nhiệt kế"}]}
+];
+
+/* ===== PHẦN IV: 5 CÂU GHÉP ĐÔI ===== */
+const MATCH = [
+  {title:"Câu 56: Ghép lĩnh vực KHTN với đối tượng nghiên cứu",
+   left:[
+    {id:1, text:"Vật lí học"},
+    {id:2, text:"Hóa học"},
+    {id:3, text:"Sinh học"},
+    {id:4, text:"Khoa học Trái Đất"}
+   ],
+   right:[
+    {id:'a', text:"Sự sống, các sinh vật và mối quan hệ giữa chúng."},
+    {id:'b', text:"Các dạng năng lượng, cơ học, điện học, ánh sáng."},
+    {id:'c', text:"Chất, cấu tạo chất và sự biến đổi tạo ra chất mới."},
+    {id:'d', text:"Cấu tạo địa chất, các lớp đất đá và khí quyển."}
+   ],
+   a:{1:'b', 2:'c', 3:'a', 4:'d'}},
+  {title:"Câu 57: Ghép biển cảnh báo với quy định bảo hộ",
+   left:[
+    {id:1, text:"Biển cảnh báo chất độc hại"},
+    {id:2, text:"Biển cảnh báo chất dễ cháy"},
+    {id:3, text:"Biển bắt buộc đeo kính"},
+    {id:4, text:"Biển bắt buộc đeo mặt nạ"}
+   ],
+   right:[
+    {id:'a', text:"Tránh xa nguồn nhiệt cao, không mang lửa lại gần."},
+    {id:'b', text:"Tuyệt đối không để dính vào da, không hít ngửi thử."},
+    {id:'c', text:"Bắt buộc che mũi và miệng bằng màng lọc hóa chất."},
+    {id:'d', text:"Yêu cầu đeo kính bảo vệ mắt chống hóa chất bắn văng."}
+   ],
+   a:{1:'b', 2:'a', 3:'d', 4:'c'}},
+  {title:"Câu 58: Ghép bộ phận kính hiển vi với chức năng",
+   left:[
+    {id:1, text:"Thị kính"},
+    {id:2, text:"Vật kính"},
+    {id:3, text:"Bàn kính"},
+    {id:4, text:"Ốc sơ cấp"}
+   ],
+   right:[
+    {id:'a', text:"Nơi đặt tấm kính mỏng chứa mẫu vật cần quan sát."},
+    {id:'b', text:"Thấu kính nằm ở đầu ống kính sát mắt nhìn."},
+    {id:'c', text:"Dùng để xoay điều chỉnh nâng hạ độ cao thô khoảng rộng."},
+    {id:'d', text:"Thấu kính nằm gần mẫu vật, quyết định độ phóng đại."}
+   ],
+   a:{1:'b', 2:'d', 3:'a', 4:'c'}},
+  {title:"Câu 59: Ghép đại lượng vật lí với đơn vị SI",
+   left:[
+    {id:1, text:"Chiều dài"},
+    {id:2, text:"Khối lượng"},
+    {id:3, text:"Thời gian"},
+    {id:4, text:"Nhiệt độ"}
+   ],
+   right:[
+    {id:'a', text:"Kilôgam (kg)"},
+    {id:'b', text:"Mét (m)"},
+    {id:'c', text:"Kelvin (K)"},
+    {id:'d', text:"Giây (s)"}
+   ],
+   a:{1:'b', 2:'a', 3:'d', 4:'c'}},
+  {title:"Câu 60: Ghép dụng cụ đo với đại lượng cần đo",
+   left:[
+    {id:1, text:"Thước dây cuộn"},
+    {id:2, text:"Cân điện tử tiểu ly"},
+    {id:3, text:"Đồng hồ bấm giây"},
+    {id:4, text:"Nhiệt kế thủy ngân"}
+   ],
+   right:[
+    {id:'a', text:"Đo khoảng thời gian diễn ra một sự kiện vận động."},
+    {id:'b', text:"Đo kích thước hình học chiều dài hoặc khoảng cách."},
+    {id:'c', text:"Đo lượng chất (khối lượng) của vật nhỏ, nhẹ."},
+    {id:'d', text:"Đo độ nóng, lạnh (nhiệt độ) của cơ thể sinh học."}
+   ],
+   a:{1:'b', 2:'c', 3:'a', 4:'d'}}
+];
+
+/* ================== CẤU HÌNH ================== */
+const SEND_URL = "https://script.google.com/macros/s/AKfycbzF1LSlq8XI5RDvco2oOdejDPdy6s80RT7JhzPKSwM_cdkmeeJkxfDgWjtYGwYSzW1t/exec";
+
+const MAX_VIOLATIONS = 3;
+const MAX_LEAVE_SECONDS = 30;
+const GRACE_SECONDS = 1;
+
+/* ================== TIỆN ÍCH ================== */
+function pad2(n){ return String(n).padStart(2,'0'); }
+function fmt(sec){
+  sec = Math.max(0, Math.floor(sec));
+  const h = Math.floor(sec/3600);
+  const m = Math.floor((sec%3600)/60);
+  const s = sec%60;
+  return (h>0 ? pad2(h)+':' : '') + pad2(m)+':'+pad2(s);
+}
+function toast(msg, isWarn){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('warn', !!isWarn);
+  t.classList.add('show');
+  clearTimeout(t._tm);
+  t._tm = setTimeout(()=>t.classList.remove('show'), 2800);
+}
+function norm(s){
+  if(s === null || s === undefined) return "";
+  return String(s).trim().toLowerCase().replace(/\s+/g," ");
+}
+
+/* ================== TRẠNG THÁI ================== */
+let state = {
+  graded:false,
+  sent:false,
+  reviewing:false,
+  soDung:0,
+  tongCau:0,
+  startTime:0,
+  elapsedSeconds:0,
+  timerId:null,
+  violations: 0,
+  violationLog: [],
+  leaveTime: 0,
+  leaveTimerId: null,
+  examStarted: false
+};
+
+/* ================== ĐỒNG HỒ ĐẾM LÊN (không giới hạn) ================== */
+function startTimer(){
+  state.startTime = Date.now();
+  state.elapsedSeconds = 0;
+  updateTimerUI();
+  state.timerId = setInterval(()=>{
+    state.elapsedSeconds = Math.floor((Date.now() - state.startTime)/1000);
+    updateTimerUI();
+  }, 250);
+}
+function stopTimer(){
+  if(state.timerId){ clearInterval(state.timerId); state.timerId = null; }
+  if(state.startTime){
+    state.elapsedSeconds = Math.floor((Date.now() - state.startTime)/1000);
+  }
+  updateTimerUI();
+}
+function updateTimerUI(){
+  document.getElementById('timerInfo').textContent = fmt(state.elapsedSeconds);
+}
+function updateViolationUI(){
+  const el = document.getElementById('violationInfo');
+  el.textContent = state.violations + " / " + MAX_VIOLATIONS;
+  el.className = 'val ' + (state.violations === 0 ? 'ok' : state.violations < MAX_VIOLATIONS ? 'warn' : 'danger');
+}
+
+/* ================== HIỂN THỊ ================== */
+const LETTERS = ['A','B','C','D'];
+
+function renderP1(){
+  document.getElementById('p1box').innerHTML = MCQ.map((q,i)=>`
+    <div class="q" data-i="${i}">
+      <div class="qtext">Câu ${i+1}. ${q.q}</div>
+      <div class="opts">
+        ${q.opts.map((o,j)=>`
+          <label class="opt" data-val="${j}">
+            <input type="radio" name="p1_${i}" value="${j}">
+            <span><b>${LETTERS[j]}.</b> ${o}</span>
+          </label>`).join('')}
+      </div>
+      <div class="ans-info" id="ans1_${i}"></div>
+    </div>`).join('');
+}
+
+function renderP2(){
+  document.getElementById('p2box').innerHTML = TF.map((q,i)=>`
+    <div class="q" data-i="${i}">
+      <div class="qtext">${q.title}</div>
+      ${q.subs.map((s,j)=>`
+        <div class="tf-row" data-sub="${j}">
+          <span class="tf-label">${s.q}</span>
+          <label><input type="radio" name="p2_${i}_${j}" value="true"> Đúng</label>
+          <label><input type="radio" name="p2_${i}_${j}" value="false"> Sai</label>
+        </div>`).join('')}
+      <div class="ans-info" id="ans2_${i}"></div>
+    </div>`).join('');
+}
+
+function renderP3(){
+  document.getElementById('p3box').innerHTML = FILL.map((q,i)=>`
+    <div class="q" data-i="${i}">
+      <div class="qtext">${q.q}</div>
+      ${q.blanks.map((b,j)=>`
+        <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
+          <span style="font-weight:700;min-width:36px">${b.label}</span>
+          <input type="text" id="p3_${i}_${j}" style="flex:1;padding:10px;border:2px solid #dbe3ee;border-radius:8px;font-size:15px" placeholder="Nhập câu trả lời..." autocomplete="off">
+        </div>`).join('')}
+      <div class="ans-info" id="ans3_${i}"></div>
+    </div>`).join('');
+}
+
+function renderP4(){
+  document.getElementById('p4box').innerHTML = MATCH.map((q,i)=>`
+    <div class="q" data-i="${i}">
+      <div class="qtext">${q.title}</div>
+      <div class="match-row">
+        <div class="match-head">Cột A</div>
+        <div class="match-head">Cột B (chọn)</div>
+      </div>
+      ${q.left.map(l=>`
+        <div class="match-row">
+          <div style="padding:8px;background:#eff6ff;border-radius:8px;font-weight:600">${l.id}. ${l.text}</div>
+          <select id="p4_${i}_${l.id}">
+            <option value="">-- Chọn --</option>
+            ${q.right.map(r=>`<option value="${r.id}">${r.id}) ${r.text}</option>`).join('')}
+          </select>
+        </div>`).join('')}
+      <div class="ans-info" id="ans4_${i}"></div>
+    </div>`).join('');
+}
+
+function renderAll(){
+  renderP1();
+  renderP2();
+  renderP3();
+  renderP4();
+}
+
+/* ================== NỘP BÀI ================== */
+function grade(autoSubmit, reason){
+  if(state.graded){ toast("Bạn đã nộp bài rồi!"); return; }
+
+  const name = document.getElementById('sName').value.trim();
+  const cls  = document.getElementById('sClass').value.trim();
+
+  if(!autoSubmit){
+    if(!name || !cls){
+      toast("Vui lòng nhập Họ tên và Lớp trước khi nộp bài!");
+      return;
+    }
+    if(!confirm("Bạn có chắc chắn muốn NỘP BÀI? Sau khi nộp sẽ không thể sửa đáp án.")) return;
+  } else {
+    toast("⚠️ TỰ ĐỘNG NỘP BÀI: " + reason, true);
+  }
+
+  stopTimer();
+  state.graded = true;
+
+  document.querySelectorAll('#p1box input, #p2box input, #p3box input, #p4box select, #sName, #sClass')
+    .forEach(inp => inp.disabled = true);
+
+  document.getElementById('btnSubmit').disabled = true;
+  document.getElementById('btnSubmit').textContent = "🚫 ĐÃ NỘP BÀI";
+  document.getElementById('btnReview').style.display = 'block';
+  document.getElementById('btnSend').style.display = 'block';
+
+  document.getElementById('scoreBig').textContent = "✅ Đã nộp bài";
+  document.getElementById('scoreDetail').innerHTML = `
+    <div>📝 Tổng số câu: 60</div>
+    <div>📋 Bấm "XEM LẠI BÀI LÀM" để kiểm tra đáp án</div>`;
+  document.getElementById('timeResult').innerHTML =
+    `⏱️ Thời gian làm bài: <b>${fmt(state.elapsedSeconds)}</b>` +
+    (reason ? `<br>⚠️ <span style="color:#dc2626">${reason}</span>` : "");
+
+  document.getElementById('result').classList.add('show');
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'center'});
+
+  sendResult(reason || "");
+}
+
+/* ================== XEM LẠI BÀI ================== */
+function reviewExam(){
+  if(!state.graded){ toast("Hãy nộp bài trước khi xem lại!"); return; }
+
+  let soDung = 0;
+  let tongCau = 0;
+
+  MCQ.forEach((q,i)=>{
+    const sel = document.querySelector(`input[name="p1_${i}"]:checked`);
+    const chosen = sel ? parseInt(sel.value) : null;
+    const ansInfo = document.getElementById('ans1_'+i);
+    const parent = document.querySelector(`#p1box .q[data-i="${i}"]`);
+    const labels = parent.querySelectorAll('.opt');
+
+    tongCau++;
+    if(chosen === q.a){
+      soDung++;
+      ansInfo.className = 'ans-info show correct';
+      ansInfo.innerHTML = `✅ <b>Đúng!</b> Đáp án: <span class="correct-ans">${LETTERS[q.a]}. ${q.opts[q.a]}</span>`;
+    } else {
+      ansInfo.className = 'ans-info show wrong';
+      const userAns = chosen !== null ? `${LETTERS[chosen]}. ${q.opts[chosen]}` : "(không chọn)";
+      ansInfo.innerHTML = `❌ <b>Sai.</b> Bạn chọn: <span class="wrong-ans">${userAns}</span> — Đáp án đúng: <span class="correct-ans">${LETTERS[q.a]}. ${q.opts[q.a]}</span>`;
+      if(chosen !== null) labels[chosen].classList.add('wrong-mark');
+      labels[q.a].classList.add('correct-mark');
+    }
+  });
+
+  TF.forEach((q,i)=>{
+    const ansInfo = document.getElementById('ans2_'+i);
+    let allCorrect = true;
+    let html = '';
+    q.subs.forEach((s,j)=>{
+      const sel = document.querySelector(`input[name="p2_${i}_${j}"]:checked`);
+      const chosen = sel ? (sel.value === "true") : null;
+      const ok = (chosen === s.a);
+      tongCau++;
+      if(ok) soDung++;
+      else allCorrect = false;
+      const userTxt = chosen === null ? "(không chọn)" : (chosen ? "Đúng" : "Sai");
+      const correctTxt = s.a ? "Đúng" : "Sai";
+      html += `${ok ? '✅' : '❌'} <b>${String.fromCharCode(97+j)})</b> Bạn chọn: <span class="${ok?'correct-ans':'wrong-ans'}">${userTxt}</span> — Đáp án: <span class="correct-ans">${correctTxt}</span><br>`;
+    });
+    ansInfo.className = 'ans-info show ' + (allCorrect ? 'correct' : 'wrong');
+    ansInfo.innerHTML = html;
+  });
+
+  FILL.forEach((q,i)=>{
+    const ansInfo = document.getElementById('ans3_'+i);
+    let allCorrect = true;
+    let html = '';
+    q.blanks.forEach((b,j)=>{
+      const inp = document.getElementById('p3_'+i+'_'+j);
+      const val = inp ? inp.value.trim() : "";
+      const ok = norm(val) === norm(b.a);
+      tongCau++;
+      if(ok) soDung++;
+      else allCorrect = false;
+      const userTxt = val || "(bỏ trống)";
+      html += `${ok ? '✅' : '❌'} <b>${b.label}</b> Bạn điền: <span class="${ok?'correct-ans':'wrong-ans'}">${userTxt}</span> — Đáp án: <span class="correct-ans">${b.a}</span><br>`;
+    });
+    ansInfo.className = 'ans-info show ' + (allCorrect ? 'correct' : 'wrong');
+    ansInfo.innerHTML = html;
+  });
+
+  MATCH.forEach((q,i)=>{
+    const ansInfo = document.getElementById('ans4_'+i);
+    let allCorrect = true;
+    let html = '';
+    q.left.forEach(l=>{
+      const sel = document.getElementById('p4_'+i+'_'+l.id);
+      const chosen = sel ? sel.value : "";
+      const correct = q.a[l.id];
+      const ok = (chosen === correct);
+      tongCau++;
+      if(ok) soDung++;
+      else allCorrect = false;
+      const userTxt = chosen || "(chưa chọn)";
+      html += `${ok ? '✅' : '❌'} <b>${l.id}</b> Bạn chọn: <span class="${ok?'correct-ans':'wrong-ans'}">${userTxt}</span> — Đáp án: <span class="correct-ans">${correct}</span><br>`;
+    });
+    ansInfo.className = 'ans-info show ' + (allCorrect ? 'correct' : 'wrong');
+    ansInfo.innerHTML = html;
+  });
+
+  state.soDung = soDung;
+  state.tongCau = tongCau;
+
+  document.getElementById('scoreBig').textContent = soDung + " / " + tongCau;
+  document.getElementById('scoreBig').style.color = soDung >= tongCau * 0.7 ? "#16a34a" : (soDung >= tongCau * 0.5 ? "#f59e0b" : "#dc2626");
+  document.getElementById('scoreDetail').innerHTML = `
+    <div>✅ Đúng: ${soDung}</div>
+    <div>❌ Sai: ${tongCau - soDung}</div>
+    <div>📊 Tỉ lệ: ${Math.round(soDung/tongCau*100)}%</div>`;
+
+  toast("📋 Đã hiển thị đáp án đúng/sai của tất cả các câu!");
+  state.reviewing = true;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ================== GỬI KẾT QUẢ ================== */
+async function sendResult(reason){
+  if(!state.graded){ toast("Hãy nộp bài trước khi gửi kết quả!"); return; }
+  if(state.sent){ toast("Kết quả đã được gửi rồi!"); return; }
+
+  const name = document.getElementById('sName').value.trim() || "(chưa nhập)";
+  const cls  = document.getElementById('sClass').value.trim() || "(chưa nhập)";
+  const viPhamInfo = state.violations === 0 ? "" : ` | VI PHẠM: ${state.violations} lần rời tab${reason ? " – " + reason : ""}`;
+
+  const data = {
+    hoTen: name,
+    lop: cls,
+    diem: 0,
+    cauDung: "Bài luyện tập - không tính điểm" + viPhamInfo
+  };
+
+  const btnSend = document.getElementById('btnSend');
+  btnSend.disabled = true;
+
+  try{
+    await fetch(SEND_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: {'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(data)
+    });
+    state.sent = true;
+    toast("✅ Đã gửi thông tin làm bài!");
+    btnSend.textContent = "✅ ĐÃ GỬI";
+  }catch(e){
+    try{
+      const qs = new URLSearchParams(data).toString();
+      await fetch(SEND_URL + "?" + qs, {mode:'no-cors'});
+      state.sent = true;
+      toast("✅ Đã gửi thông tin làm bài!");
+      btnSend.textContent = "✅ ĐÃ GỬI";
+    }catch(err){
+      toast("❌ Gửi thất bại! Bấm nút GỬI LẠI để thử lại.");
+      btnSend.disabled = false;
+      btnSend.textContent = "📤 GỬI LẠI";
+    }
+  }
+}
+
+/* =============================================================
+   CHỐNG GIAN LẬN
+   ============================================================= */
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('copy', e => e.preventDefault());
+document.addEventListener('cut', e => e.preventDefault());
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'PrintScreen' || e.keyCode === 44){
+    e.preventDefault();
+    flashBlur("Phím chụp màn hình đã bị vô hiệu hoá");
+  }
+  if(e.metaKey && e.shiftKey && ['3','4','5'].includes(e.key)) e.preventDefault();
+  if(e.ctrlKey && e.shiftKey && e.key === 'S') e.preventDefault();
+  if(e.key === 'F12') e.preventDefault();
+});
+
+function flashBlur(msg){
+  const body = document.body;
+  body.classList.add('blurred');
+  const ov = document.getElementById('blurOverlay');
+  ov.classList.add('show');
+  const sub = ov.querySelector('.sub');
+  if(sub) sub.innerHTML = msg + "<br>Hành vi này đã được ghi lại.";
+  setTimeout(()=>{
+    body.classList.remove('blurred');
+    ov.classList.remove('show');
+  }, 1500);
+}
+
+function handleLeave(){
+  if(!state.examStarted || state.graded) return;
+  state.leaveTime = Date.now();
+  state.violations += 1;
+  state.violationLog.push({time: new Date().toLocaleTimeString('vi-VN'), type: 'leave'});
+  updateViolationUI();
+  document.body.classList.add('blurred');
+  document.getElementById('blurOverlay').classList.add('show');
+  if(state.violations >= MAX_VIOLATIONS){
+    autoSubmit("Đã rời màn hình đủ " + MAX_VIOLATIONS + " lần");
+    return;
+  }
+  if(state.leaveTimerId) clearTimeout(state.leaveTimerId);
+  state.leaveTimerId = setTimeout(()=>{
+    autoSubmit("Rời màn hình quá " + MAX_LEAVE_SECONDS + " giây");
+  }, MAX_LEAVE_SECONDS * 1000);
+}
+
+function handleReturn(){
+  if(!state.examStarted || state.graded) return;
+  const leftDur = state.leaveTime ? (Date.now() - state.leaveTime)/1000 : 0;
+  if(state.leaveTimerId){ clearTimeout(state.leaveTimerId); state.leaveTimerId = null; }
+  if(leftDur < GRACE_SECONDS && state.violations > 0){
+    state.violations -= 1;
+    state.violationLog.pop();
+    updateViolationUI();
+    document.body.classList.remove('blurred');
+    document.getElementById('blurOverlay').classList.remove('show');
+    return;
+  }
+  document.body.classList.remove('blurred');
+  document.getElementById('blurOverlay').classList.remove('show');
+  showWarnModal();
+}
+
+document.addEventListener('visibilitychange', function(){
+  if(document.hidden) handleLeave();
+  else handleReturn();
+});
+window.addEventListener('blur', function(){
+  setTimeout(()=>{
+    if(document.hidden || !document.hasFocus()){
+      if(!document.body.classList.contains('blurred')) handleLeave();
+    }
+  }, 100);
+});
+window.addEventListener('focus', function(){
+  if(document.body.classList.contains('blurred')) handleReturn();
+});
+window.addEventListener('beforeunload', function(e){
+  if(state.examStarted && !state.graded){
+    e.preventDefault();
+    e.returnValue = "Bài làm sẽ bị mất. Bạn có chắc muốn rời đi?";
+    return e.returnValue;
+  }
+});
+
+function showWarnModal(){
+  const modal = document.getElementById('warnModal');
+  document.getElementById('warnCount').textContent = `Lần ${state.violations} / ${MAX_VIOLATIONS}`;
+  const msgEl = document.getElementById('warnMsg');
+  msgEl.textContent = "Bạn vừa rời khỏi màn hình làm bài. Hệ thống đã ghi nhận hành vi này.";
+  if(state.violations === MAX_VIOLATIONS - 1){
+    msgEl.textContent = "⚠️ CHÚ Ý: Bạn chỉ còn 1 lần nữa. Vi phạm tiếp theo sẽ bị tự động nộp bài!";
+  }
+  modal.classList.add('show');
+}
+document.getElementById('warnBtn').addEventListener('click', function(){
+  document.getElementById('warnModal').classList.remove('show');
+});
+
+function autoSubmit(reason){
+  if(state.graded) return;
+  if(state.leaveTimerId){ clearTimeout(state.leaveTimerId); state.leaveTimerId = null; }
+  document.body.classList.remove('blurred');
+  document.getElementById('blurOverlay').classList.remove('show');
+  document.getElementById('warnModal').classList.remove('show');
+  grade(true, reason);
+}
+
+/* ================== BẮT ĐẦU ================== */
+function startExam(){
+  document.getElementById('startOverlay').classList.add('hide');
+  const el = document.documentElement;
+  const reqFS = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+  if(reqFS) reqFS.call(el).catch(()=>{});
+  if(screen.orientation && screen.orientation.lock){
+    screen.orientation.lock('portrait').catch(()=>{});
+  }
+  state.examStarted = true;
+  state.violations = 0;
+  state.violationLog = [];
+  updateViolationUI();
+  renderAll();
+  startTimer();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+/* ================== GỬI KẾT QUẢ QUA APPS SCRIPT ================== */
+function sendResult(reason){
+  if(!state.graded){ toast("Hãy nộp bài trước khi gửi kết quả!"); return; }
+  if(state.sent){ toast("Kết quả đã được gửi rồi!"); return; }
+
+  const name = document.getElementById('sName').value.trim() || "(chưa nhập)";
+  const cls  = document.getElementById('sClass').value.trim() || "(chưa nhập)";
+
+  // Đếm số câu đúng bằng cách chấm nhanh
+  let soDung = 0, tongCau = 0;
+  MCQ.forEach((q,i)=>{
+    const sel = document.querySelector(`input[name="p1_${i}"]:checked`);
+    const chosen = sel ? parseInt(sel.value) : null;
+    tongCau++;
+    if(chosen === q.a) soDung++;
+  });
+  TF.forEach((q,i)=>{
+    q.subs.forEach((s,j)=>{
+      const sel = document.querySelector(`input[name="p2_${i}_${j}"]:checked`);
+      const chosen = sel ? (sel.value === "true") : null;
+      tongCau++;
+      if(chosen === s.a) soDung++;
+    });
+  });
+  FILL.forEach((q,i)=>{
+    q.blanks.forEach((b,j)=>{
+      const inp = document.getElementById('p3_'+i+'_'+j);
+      const val = inp ? inp.value.trim() : "";
+      tongCau++;
+      if(norm(val) === norm(b.a)) soDung++;
+    });
+  });
+  MATCH.forEach((q,i)=>{
+    q.left.forEach(l=>{
+      const sel = document.getElementById('p4_'+i+'_'+l.id);
+      const chosen = sel ? sel.value : "";
+      tongCau++;
+      if(chosen === q.a[l.id]) soDung++;
+    });
+  });
+
+  const viPhamInfo = state.violations === 0 ? "" : ` | VI PHẠM: ${state.violations} lần rời tab${reason ? " – " + reason : ""}`;
+
+  const data = {
+    hoTen: name,
+    lop: cls,
+    diem: soDung + "/" + tongCau,
+    cauDung: `Đúng ${soDung}/${tongCau} câu (${Math.round(soDung/tongCau*100)}%)` + viPhamInfo
+  };
+
+  const btnSend = document.getElementById('btnSend');
+  btnSend.disabled = true;
+  btnSend.textContent = "⏳ ĐANG GỬI...";
+
+  // Gọi Google Apps Script
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(res && res.ok){
+        state.sent = true;
+        toast("✅ " + res.message);
+        btnSend.textContent = "✅ ĐÃ GỬI";
+      } else {
+        toast("❌ " + (res.message || "Gửi thất bại!"));
+        btnSend.disabled = false;
+        btnSend.textContent = "📤 GỬI LẠI";
+      }
+    })
+    .withFailureHandler(function(err){
+      toast("❌ Lỗi kết nối: " + err.message);
+      btnSend.disabled = false;
+      btnSend.textContent = "📤 GỬI LẠI";
+    })
+    .nhanKetQua(data);
+}
+document.getElementById('btnStart').addEventListener('click', startExam);
+document.getElementById('btnSubmit').addEventListener('click', () => grade(false));
+document.getElementById('btnReview').addEventListener('click', reviewExam);
+document.getElementById('btnSend').addEventListener('click', () => sendResult(""));
+</script>
+</body>
+</html>
